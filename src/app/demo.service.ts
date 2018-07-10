@@ -17,8 +17,8 @@ export class DemoService {
     // for all back-end code.
 
     // Uses http.get() to load data from a single API endpoint
-    getFoods() {
-        return this.http.get('/api/food');
+    getAccounts() {
+        return this.http.get('http://localhost:8080/getAccounts');
     }
 
     // Uses Observable.forkJoin() to run multiple concurrent http.get() requests.
@@ -31,9 +31,10 @@ export class DemoService {
     }
 
     // send a POST request to the API to create a new data object
-    createFood(food) {
-        let body = JSON.stringify(food);
-        return this.http.post('/api/food/', body, httpOptions);
+    createAccount(account) {
+        let body = JSON.stringify(account);
+        console.log("the body is " + body);
+        return this.http.post('http://localhost:8080/register/', body, httpOptions);
     }
 
     // send a PUT request to the API to update a data object
@@ -43,8 +44,8 @@ export class DemoService {
     }
 
     // send a DELETE request to the API to delete a data object
-    deleteFood(food) {
-        return this.http.delete('/api/food/' + food.id);
+    deleteAccount(account) {
+        return this.http.delete('/api/food/' + account.email);
     }
 
 }

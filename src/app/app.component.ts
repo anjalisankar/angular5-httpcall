@@ -1,22 +1,23 @@
 import {Component} from '@angular/core';
 import {DemoService} from './demo.service';
 import {Observable} from 'rxjs/Rx';
+import { Account } from './account';
 
 @Component({
   selector: 'demo-app',
   template:`
   <h1>Angular 5 HttpClient Demo App</h1>
   <p>This is a complete mini-CRUB application using a Node back-end. See src/app/demo.service.ts for the API call code.</p>
-  <h2>Foods</h2>
+  <h2>Accounts</h2>
   <ul>
-    <li *ngFor="let food of foods"><input type="text" name="food-name" [(ngModel)]="food.name"><button (click)="updateFood(food)">Save</button> <button (click)="deleteFood(food)">Delete</button></li>
+    <li *ngFor="let account of accounts"><input type="text" name="email" [(ngModel)]="account.email"><button (click)="updateAccount(account)">Save</button> <button (click)="deleteAccount(account)">Delete</button></li>
   </ul>
-  <p>Create a new food: <input type="text" name="food_name" [(ngModel)]="food_name"><button (click)="createFood(food_name)">Save</button></p>
-  
+  <p>Create a new account: <input type="text" name="email" [(ngModel)]="account.email"><button (click)="createAccount(account)">Save</button></p>
+
   <h2>Books and Movies</h2>
-  
+
   <p>This is an example of loading data from multiple endpoints using Observable.forkJoin(). The API calls here are read-only.</p>
-  
+
   <h3>Books</h3>
   <ul>
     <li *ngFor="let book of books">{{book.title}}</li>
@@ -29,28 +30,35 @@ import {Observable} from 'rxjs/Rx';
 })
 export class AppComponent {
 
-  public foods;
+  public accounts ;
   public books;
   public movies;
 
-  public food_name;
+  public email;
+
+  public account : Account;
 
   constructor(private _demoService: DemoService) { }
 
   ngOnInit() {
-    this.getFoods();
+    this.getAccounts();
+    console.log("Vaidy 1");
     this.getBooksAndMovies();
   }
 
-  getFoods() {
-    this._demoService.getFoods().subscribe(
+  getAccounts() {
+    this._demoService.getAccounts().subscribe(
       // the first argument is a function which runs on success
-      data => { this.foods = data},
+      data => { this.accounts = data;
+              console.log(data);
+    },
+
       // the second argument is a function which runs on error
       err => console.error(err),
       // the third argument is a function which runs on completion
-      () => console.log('done loading foods')
+      () => console.log('done loading accounts')
     );
+
   }
 
   getBooksAndMovies() {
@@ -64,16 +72,19 @@ export class AppComponent {
     );
   }
 
-  createFood(name) {
-    let food = {name: name};
-    this._demoService.createFood(food).subscribe(
+  createAccount(account) {
+    account.email = 'vaidy.jayaraman@gmail.com';
+    account.merchant = 'va11';
+    account.guid = '12321321321';
+    let acc = {name: name};
+    this._demoService.createAccount(account).subscribe(
        data => {
          // refresh the list
-         this.getFoods();
+         this.getAccounts();
          return true;
        },
        error => {
-         console.error("Error saving food!");
+         console.error("Error saving Account!");
          return Observable.throw(error);
        }
     );
@@ -83,7 +94,7 @@ export class AppComponent {
     this._demoService.updateFood(food).subscribe(
        data => {
          // refresh the list
-         this.getFoods();
+         this.getAccounts();
          return true;
        },
        error => {
@@ -93,12 +104,12 @@ export class AppComponent {
     );
   }
 
-  deleteFood(food) {
-    if (confirm("Are you sure you want to delete " + food.name + "?")) {
-      this._demoService.deleteFood(food).subscribe(
+  deleteAccount(account) {
+    if (confirm("Are you sure you want to delete " + account.email + "?")) {
+      this._demoService.deleteAccount(account).subscribe(
          data => {
            // refresh the list
-           this.getFoods();
+           this.getAccounts();
            return true;
          },
          error => {
