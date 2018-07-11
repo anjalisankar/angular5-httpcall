@@ -10,33 +10,40 @@ import { Account } from './account';
   <p>This is a complete mini-CRUB application using a Node back-end. See src/app/demo.service.ts for the API call code.</p>
   <h2>Accounts</h2>
   <ul>
-    <li *ngFor="let account of accounts"><input type="text" name="email" [(ngModel)]="account.email"><button (click)="updateAccount(account)">Save</button> <button (click)="deleteAccount(account)">Delete</button></li>
+    <li *ngFor="let account of accounts">
+    <label for="email">Email</label>
+    <input type="text" name="email" [(ngModel)]="account.email">
+    <label for="merchant">Merchant</label>
+    <input type="text" name="merchant" [(ngModel)]="account.merchant">
+    <label for="Guid">Guid</label>
+    <input type="text" name="guid" [(ngModel)]="account.guid">
+    <button (click)="updateAccount(account)">Save</button> <button (click)="deleteAccount(account)">Delete</button></li>
   </ul>
-  <p>Create a new account: <input type="text" name="email" [(ngModel)]="account.email"><button (click)="createAccount(account)">Save</button></p>
+  <p>Create a new account:
+  <label for="email">Email</label>
+  <input type="text" name="email" [(ngModel)]="account.email">
+  <label for="merchant">Merchant</label>
+  <input type="text" name="merchant" [(ngModel)]="account.merchant">
+  <label for="Guid">Guid</label>
+  <input type="text" name="guid" [(ngModel)]="account.guid">
 
-  <h2>Books and Movies</h2>
 
-  <p>This is an example of loading data from multiple endpoints using Observable.forkJoin(). The API calls here are read-only.</p>
-
-  <h3>Books</h3>
-  <ul>
-    <li *ngFor="let book of books">{{book.title}}</li>
-  </ul>
-  <h3>Movies</h3>
-  <ul>
-    <li *ngFor="let movie of movies">{{movie.title}}</li>
-  </ul>
+  <button (click)="createAccount(account)">Save</button></p>
   `
 })
 export class AppComponent {
 
-  public accounts ;
-  public books;
-  public movies;
+  public accounts: any = [];
+  public books: any = [];
+  public movies: any = [];
 
   public email;
 
-  public account : Account;
+  public account: Account = {
+    guid: '',
+    email: '',
+    merchant: '',
+  };
 
   constructor(private _demoService: DemoService) { }
 
@@ -49,9 +56,7 @@ export class AppComponent {
   getAccounts() {
     this._demoService.getAccounts().subscribe(
       // the first argument is a function which runs on success
-      data => { this.accounts = data;
-              console.log(data);
-    },
+      data => { this.accounts = <Account[]>data},
 
       // the second argument is a function which runs on error
       err => console.error(err),
@@ -73,9 +78,9 @@ export class AppComponent {
   }
 
   createAccount(account) {
-    account.email = 'vaidy.jayaraman@gmail.com';
-    account.merchant = 'va11';
-    account.guid = '12321321321';
+    account.email = account.email;
+    account.merchant = account.merchant;
+    account.guid = account.guid;
     let acc = {name: name};
     this._demoService.createAccount(account).subscribe(
        data => {
