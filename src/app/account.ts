@@ -1,9 +1,13 @@
 
 export class Account   {
 
-  guid: string;
-  email: string;
   merchant: string;
+  email: string;
+  password: string;
+  guid: string;
+  //dateCreated: string;
+  //lastmod: string;
+  
 
   constructor() { }
 

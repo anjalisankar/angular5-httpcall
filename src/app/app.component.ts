@@ -5,31 +5,40 @@ import { Account } from './account';
 
 @Component({
   selector: 'demo-app',
+  styleUrls: ['./app.component.css'],
   template:`
-  <h1>Angular 5 HttpClient Demo App</h1>
-  <p>This is a complete mini-CRUB application using a Node back-end. See src/app/demo.service.ts for the API call code.</p>
-  <h2>Accounts</h2>
+  <h1 id="title">Demo App</h1>
+  <p id="paragraph">Landing Page</p>
+  <h2 class="newclass">Create New Account</h2>
   <ul>
     <li *ngFor="let account of accounts">
-    <label for="email">Email</label>
-    <input type="text" name="email" [(ngModel)]="account.email">
-    <label for="merchant">Merchant</label>
+    <label for="merchant">Name:</label>
     <input type="text" name="merchant" [(ngModel)]="account.merchant">
+    <label for="email">Email:</label>
+    <input type="text" name="email" [(ngModel)]="account.email">
+	<label for="password">Password:</label>
+	<input type="text" name="password" [(ngModel)]="account.password">
     <label for="Guid">Guid</label>
     <input type="text" name="guid" [(ngModel)]="account.guid">
     <button (click)="updateAccount(account)">Save</button> <button (click)="deleteAccount(account)">Delete</button></li>
   </ul>
   <p>Create a new account:
+  <label for="merchant">Name</label>
+  <input type="text" name="merchant" [(ngModel)]="account.merchant">
   <label for="email">Email</label>
   <input type="text" name="email" [(ngModel)]="account.email">
-  <label for="merchant">Merchant</label>
-  <input type="text" name="merchant" [(ngModel)]="account.merchant">
+  <label for="password">Password</label>
+  <input type="text" name="password" [(ngModel)]="account.password">  
   <label for="Guid">Guid</label>
   <input type="text" name="guid" [(ngModel)]="account.guid">
 
 
-  <button (click)="createAccount(account)">Save</button></p>
+  <button (click)="createAccount(account)">Save</button>
+  <button (click)="deleteAccount(account)">Delete</button></p>
+  
+  <app-payment></app-payment>
   `
+  
 })
 export class AppComponent {
 
@@ -43,6 +52,7 @@ export class AppComponent {
     guid: '',
     email: '',
     merchant: '',
+	password:'',
   };
 
   constructor(private _demoService: DemoService) { }
@@ -81,6 +91,7 @@ export class AppComponent {
     account.email = account.email;
     account.merchant = account.merchant;
     account.guid = account.guid;
+	account.password = account.password;
     let acc = {name: name};
     this._demoService.createAccount(account).subscribe(
        data => {
@@ -118,7 +129,7 @@ export class AppComponent {
            return true;
          },
          error => {
-           console.error("Error deleting food!");
+           console.error("Error in deleting account");
            return Observable.throw(error);
          }
       );

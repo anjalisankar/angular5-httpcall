@@ -1,0 +1,35 @@
+ <h1 id="title">Account Payment Page</h1>
+  <p id="paragraph">User: </p>
+  <h2 class="newclass">Register Payment Info:</h2>
+  <ul>
+    <li *ngFor="let account of accounts">
+    <label for="accountid">Account ID:</label>
+    <input type="text" name="accountid" [(ngModel)]="payment.accountid">
+    <label for="pmid">Choose Payment Method:</label>
+    <input type="text" name="pmid" [(ngModel)]="payment.pmid">
+	<label for="firstname">First Name:</label>
+    <input type="text" name="firstname" [(ngModel)]="payment.firstname">
+    <label for="middlename">Middle Name:</label>
+    <input type="text" name="middlename" [(ngModel)]="payment.middlename">
+	<label for="lastname">Last Name:</label>
+    <input type="text" name="lastname" [(ngModel)]="payment.lastname">
+	<label for="street">Street Name:</label>
+    <input type="text" name="street" [(ngModel)]="payment.street">
+	<label for="street2">Apt/Suite:</label>
+    <input type="text" name="street2" [(ngModel)]="payment.street2">
+	<label for="street3">Street Name:</label>
+    <input type="text" name="street3" [(ngModel)]="payment.street3">
+	<label for="city">City:</label>
+    <input type="text" name="city" [(ngModel)]="payment.city">
+	<label for="state">State:</label>
+    <input type="text" name="state" [(ngModel)]="payment.state">
+	<label for="zip">ZIP code:</label>
+    <input type="text" name="zip" [(ngModel)]="payment.zip">
+	<label for="country">Country:</label>
+    <input type="text" name="country" [(ngModel)]="payment.country">
+    <button (click)="updateAccount(account)">Save</button> <button (click)="deleteAccount(account)">Delete</button></li>
+  </ul>
+
+
+  <button (click)="createAccount(account)">Save</button>
+  <button (click)="deleteAccount(account)">Delete</button></p>
